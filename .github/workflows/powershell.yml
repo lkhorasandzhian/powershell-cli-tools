@@ -32,3 +32,10 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: results.sarif
+
+      - name: Upload analysis artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: psscriptanalyzer-results
+          path: results.sarif
+          retention-days: 7
