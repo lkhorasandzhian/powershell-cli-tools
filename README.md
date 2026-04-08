@@ -20,6 +20,19 @@ cd powershell-cli-tools
 
 Run scripts directly or add them to your PowerShell profile.
 
+### 🚀 Install
+
+Run the install script:
+
+```powershell
+.\install.ps1
+```
+
+This will:
+1. Copy the script to your PowerShell directory;
+2. Automatically update your $PROFILE just by adding call for `powershell-cli-tools.ps1`;
+3. Enable tools on every PowerShell startup.
+
 ## ⭐ Support
 
 If you find this useful, consider giving it a star ❤️ — it really helps the project grow and keeps me motivated to add more tools!
