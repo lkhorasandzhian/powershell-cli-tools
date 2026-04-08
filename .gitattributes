@@ -1,0 +1,8 @@
+# По умолчанию исключаем всё из статистики.
+* linguist-vendored=true
+
+# Разрешаем учитывать PowerShell.
+*.ps1 linguist-vendored=false
+
+# Разрешаем учитывать Shell.
+*.sh linguist-vendored=false
