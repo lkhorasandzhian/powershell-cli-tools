@@ -1,0 +1,7 @@
+self_approval_messages:
+  - "/approve"
+
+from_author:
+  - "lkhorasandzhian"
+
+apply_labels: []
