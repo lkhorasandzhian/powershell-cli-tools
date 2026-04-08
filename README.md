@@ -21,7 +21,6 @@ cd powershell-cli-tools
 Run scripts directly or add them to your PowerShell profile.
 
 ### 🚀 Install
-
 Run the install script:
 
 ```powershell
@@ -34,7 +33,26 @@ This will:
 3. Enable tools on every PowerShell startup.
 
 ## ⭐ Support
-
-If you find this useful, consider giving it a star ❤️ — it really helps the project grow and keeps me motivated to add more tools!
-
+If you find this useful, consider giving it a star ❤️ — it really helps the project grow and keeps me motivated to add more tools!  
 More tools and improvements are coming.
+
+## 📁 Repository structure
+```txt
+powershell-cli-tools/
+│
+├── scripts/
+│   └── powershell-cli-tools.ps1
+│
+├── test/
+│   └── 01/
+│       ├── tree-color-test/
+│       └── create-tree-test.ps1
+│
+├── install.ps1
+├── LICENSE
+└── README.md
+```
+
+## 🧪 Tests
+Test cases are located in the `test/` directory.  
+They are used to verify CLI behavior, output formatting, and ensure consistent functionality across different scenarios.
