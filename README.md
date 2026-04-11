@@ -1,5 +1,7 @@
 # powershell-cli-tools 
 
+<img width="640" height="320" alt="powershell-cli-tools_preview" src="https://github.com/user-attachments/assets/28c17a66-cc06-4a3b-af72-4091966fdfe6" />
+
 [![GitHub stars](https://img.shields.io/github/stars/lkhorasandzhian/powershell-cli-tools?style=social)](https://github.com/lkhorasandzhian/powershell-cli-tools/stargazers)
 
 Collection of useful PowerShell 7 scripts, shortcuts and CLI tools for productivity and terminal enhancements.
