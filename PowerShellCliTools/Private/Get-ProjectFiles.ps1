@@ -37,7 +37,7 @@ function Get-TotalLineCount {
 
     foreach ($file in $Files) {
         try {
-            $lineCount += [System.IO.File]::ReadLines($file.FullName).Count
+            $lineCount += ([System.IO.File]::ReadLines($file.FullName) | Measure-Object).Count
         }
         catch {
             Write-Verbose "Failed to read file: $($file.FullName)"

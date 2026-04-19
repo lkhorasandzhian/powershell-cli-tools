@@ -27,4 +27,4 @@ jobs:
       - name: Run PowerShellCliTools tests
         shell: pwsh
         run: |
-          Invoke-Pester .\tests\PowerShellCliTools.Tests.ps1
+          Invoke-Pester .\tests\PowerShellCliTools.Tests.ps1 -EnableExit
