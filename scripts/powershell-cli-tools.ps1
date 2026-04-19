@@ -14,8 +14,7 @@
 $OutputEncoding           = [System.Text.UTF8Encoding]::new()
 
 # --- Basic useful aliases ---
-function ll { Get-ChildItem -Force }
-function la { Get-ChildItem -Force -Recurse }
+function la { Get-ChildItem -Force }
 function .. { Set-Location .. }
 
 # --- Fast move to favorite folders ---
