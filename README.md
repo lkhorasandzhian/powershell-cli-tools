@@ -61,7 +61,12 @@ Get-Command -Module PowerShellCliTools
 
 The module exports PowerShell-style command names and keeps the old shorter names as aliases for convenience.
 
-## ⭐ Support
+### 🚀 Install
+Run the install script:
+
+```powershell
+.\install.ps1
+```
 
 If you find this useful, consider giving it a star ❤️ — it really helps the project grow and keeps me motivated to add more tools!
 More tools and improvements are coming.
