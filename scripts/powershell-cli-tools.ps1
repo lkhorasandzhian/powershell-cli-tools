@@ -132,7 +132,7 @@ function tree-color {
 
         [int]$Depth = 50,
 
-        [string[]]$Exclude = @("bin", "obj", ".git", ".vs", "node_modules")
+        [string[]]$Exclude = @("bin", "obj", ".git", ".vs", "node_modules", ".venv", ".dotnet_cli")
     )
 
     # Custom Colors.
