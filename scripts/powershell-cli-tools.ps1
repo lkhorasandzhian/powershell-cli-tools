@@ -23,6 +23,7 @@ function repos { Set-Location "$HOME\source\repos" }
 
 # --- File counter by extensions ---
 function file-counter {
+    [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]
         [string[]]$Exts
@@ -44,17 +45,16 @@ function file-counter {
     }
 
     foreach ($ext in $Exts) {
-        if ($ext -notmatch '^\.') {
-            $ext = ".$ext"
-        }
+        $normalizedExt = if ($ext -match '^\.') { $ext } else { ".$ext" }
 
-        $count = ($files | Where-Object { $_.Extension -ieq $ext }).Count
-        "{0,-10} {1}" -f $ext, $count
+        $count = ($files | Where-Object { $_.Extension -ieq $normalizedExt }).Count
+        "{0,-10} {1}" -f $normalizedExt, $count
     }
 }
 
 # --- Line counter by extensions ---
 function line-counter {
+    [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]
         [string[]]$Exts
@@ -68,58 +68,66 @@ function line-counter {
     if ($Exts -contains "*") {
         $files |
             Group-Object Extension |
-            Sort-Object Name |
             ForEach-Object {
                 $ext = if ([string]::IsNullOrEmpty($_.Name)) { "[no ext]" } else { $_.Name }
 
                 $lineCount = 0
                 foreach ($file in $_.Group) {
                     try {
-                        $lineCount += (Get-Content $file.FullName -ErrorAction Stop | Measure-Object -Line).Lines
+                        $lineCount += [System.IO.File]::ReadLines($file.FullName).Count
                     }
                     catch {
+                        Write-Verbose "Failed to read file: $($file.FullName)"
                     }
                 }
 
-                "{0,-10} {1}" -f $ext, $lineCount
+                [PSCustomObject]@{
+                    Extension = $ext
+                    Lines     = $lineCount
+                }
+            } |
+            Sort-Object Lines -Descending |
+            ForEach-Object {
+                "{0,-10} {1}" -f $_.Extension, $_.Lines
             }
+
         return
     }
 
     foreach ($ext in $Exts) {
-        if ($ext -notmatch '^\.') {
-            $ext = ".$ext"
-        }
+        $normalizedExt = if ($ext -match '^\.') { $ext } else { ".$ext" }
 
-        $matchedFiles = $files | Where-Object { $_.Extension -ieq $ext }
+        $matchedFiles = $files | Where-Object { $_.Extension -ieq $normalizedExt }
 
         $lineCount = 0
         foreach ($file in $matchedFiles) {
             try {
-                $lineCount += (Get-Content $file.FullName -ErrorAction Stop | Measure-Object -Line).Lines
+                $lineCount += [System.IO.File]::ReadLines($file.FullName).Count
             }
             catch {
+                Write-Verbose "Failed to read file: $($file.FullName)"
             }
         }
 
-        "{0,-10} {1}" -f $ext, $lineCount
+        "{0,-10} {1}" -f $normalizedExt, $lineCount
     }
 }
 
 # --- File and line counter by extensions ---
 function super-counter {
+    [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]
         [string[]]$Exts
     )
 
     Write-Host "Files:"
-    file-counter @Exts
+    file-counter -Exts $Exts
 
-    Write-Host ""
+    Write-Host
 
     Write-Host "Lines:"
-    line-counter @Exts
+    line-counter -Exts $Exts
 }
 
 # --- Colorful Directory Tree ---
@@ -151,19 +159,19 @@ function tree-color {
 
         switch ($true) {
             # Programming Languages
-            { $ext -eq ".cs" }   { "Green"; break }
-            { $ext -eq ".cpp" }  { $Pink; break }
-            { $ext -eq ".h" }    { $PinkLight; break }
-            { $ext -eq ".java" } { $Orange; break }
-            { $ext -eq ".py" }   { "Yellow"; break }
-            { $ext -eq ".ipynb" } { "Yellow"; break }
+            { $ext -eq ".cs"    } { "Green"; break      }
+            { $ext -eq ".cpp"   } { $Pink; break        }
+            { $ext -eq ".h"     } { $PinkLight; break   }
+            { $ext -eq ".java"  } { $Orange; break      }
+            { $ext -eq ".py"    } { "Yellow"; break     }
+            { $ext -eq ".ipynb" } { "Yellow"; break     }
 
             # Secrets
             { $nameLower -eq ".env" } { "DarkRed"; break }
 
             # Docs
-            { $ext -eq ".md" }   { "DarkYellow"; break }
-            { $ext -eq ".tex" }   { "DarkYellow"; break }
+            { $ext -eq ".md"  } { "DarkYellow"; break }
+            { $ext -eq ".tex" } { "DarkYellow"; break }
 
             default { $null }
         }
@@ -176,7 +184,7 @@ function tree-color {
 
         $nameLower = $Name.ToLower()
 
-        if ($nameLower -eq "dockerfile" -or $nameLower -eq "docker-compose.yaml") {
+        if ($nameLower -in @("dockerfile", "docker-compose.yaml", "docker-compose.yml")) {
             Write-Host $Name -ForegroundColor Cyan
             return
         }
