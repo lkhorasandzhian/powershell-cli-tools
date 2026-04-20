@@ -17,7 +17,17 @@
         'Set-HomeLocation',
         'Set-ReposLocation'
     )
-    AliasesToExport = @()
+    AliasesToExport = @(
+        'll',
+        'la',
+        '..',
+        'home',
+        'repos',
+        'file-counter',
+        'line-counter',
+        'super-counter',
+        'tree-color'
+    )
     CmdletsToExport = @()
     VariablesToExport = @()
     PrivateData = @{
