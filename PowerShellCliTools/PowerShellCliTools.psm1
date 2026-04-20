@@ -39,14 +39,4 @@ Export-ModuleMember -Function @(
     'Set-ParentLocation',
     'Set-HomeLocation',
     'Set-ReposLocation'
-) -Alias @(
-    'll',
-    'la',
-    '..',
-    'home',
-    'repos',
-    'file-counter',
-    'line-counter',
-    'super-counter',
-    'tree-color'
 )

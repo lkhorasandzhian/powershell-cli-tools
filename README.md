@@ -62,6 +62,7 @@ Get-Command -Module PowerShellCliTools
 The module exports PowerShell-style command names and keeps the old shorter names as aliases for convenience.
 
 ### 🚀 Install
+
 Run the install script:
 
 ```powershell
@@ -76,9 +77,11 @@ More tools and improvements are coming.
 ```txt
 powershell-cli-tools/
 ├── .github/
-│   ├── demo/
+│   ├── cover/
+│   │   └── powershell-cli-tools_preview.png
 │   ├── workflows/
-│   │   └── manual-tests.yml
+│   │   ├── manual-tests.yml
+│   │   └── powershell.yml
 │   └── self-approval.yml
 ├── PowerShellCliTools/
 │   ├── Private/
@@ -93,8 +96,13 @@ powershell-cli-tools/
 │   │   └── Show-ColorTree.ps1
 │   ├── PowerShellCliTools.psd1
 │   └── PowerShellCliTools.psm1
+├── test/
+│   └── 01/
+│       ├── tree-color-test/
+│       └── create-tree-test.ps1
 ├── tests/
 │   └── PowerShellCliTools.Tests.ps1
+├── .gitattributes
 ├── install.ps1
 ├── LICENSE
 └── README.md
