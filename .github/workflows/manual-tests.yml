@@ -1,0 +1,30 @@
+name: Manual Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  pester:
+    name: Run Pester tests
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Ensure Pester is available
+        shell: pwsh
+        run: |
+          $pesterModule = Get-Module Pester -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1
+
+          if (-not $pesterModule) {
+              Install-Module Pester -Scope CurrentUser -Force -SkipPublisherCheck
+              $pesterModule = Get-Module Pester -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1
+          }
+
+          Write-Host "Using Pester version $($pesterModule.Version)"
+
+      - name: Run PowerShellCliTools tests
+        shell: pwsh
+        run: |
+          Invoke-Pester .\tests\PowerShellCliTools.Tests.ps1 -EnableExit
