@@ -11,6 +11,8 @@ $stagingModuleDir = Join-Path $targetModulesDir "$moduleName.installing"
 
 $profileExisted = Test-Path $PROFILE
 $targetModuleExisted = Test-Path $targetModuleDir
+$existingModuleBackedUp = $false
+$newModuleActivated = $false
 
 try {
     Write-Host "Installing module '$moduleName'..." -ForegroundColor Cyan
@@ -55,10 +57,12 @@ try {
     if ($targetModuleExisted) {
         Write-Host "Existing module found. Moving it to backup: $backupModuleDir" -ForegroundColor Cyan
         Move-Item $targetModuleDir $backupModuleDir -Force
+        $existingModuleBackedUp = $true
     }
 
     Write-Host 'Activating new module version...' -ForegroundColor Cyan
     Move-Item $stagingModuleDir $targetModuleDir -Force
+    $newModuleActivated = $true
 
     if (-not (Test-Path $PROFILE)) {
         New-Item -ItemType File -Path $PROFILE -Force | Out-Null
@@ -97,7 +101,7 @@ try {
 catch {
     Write-Host 'Installation failed. Rolling back...' -ForegroundColor Red
 
-    if (Test-Path $targetModuleDir) {
+    if ($newModuleActivated -and (Test-Path $targetModuleDir)) {
         Remove-Item $targetModuleDir -Recurse -Force
     }
 
@@ -105,7 +109,7 @@ catch {
         Remove-Item $stagingModuleDir -Recurse -Force
     }
 
-    if (Test-Path $backupModuleDir) {
+    if ($existingModuleBackedUp -and (Test-Path $backupModuleDir)) {
         Move-Item $backupModuleDir $targetModuleDir -Force
     }
 
