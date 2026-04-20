@@ -17,8 +17,8 @@ jobs:
         run: |
           $pesterModule = Get-Module Pester -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1
 
-          if (-not $pesterModule) {
-              Install-Module Pester -Scope CurrentUser -Force -SkipPublisherCheck
+          if (-not $pesterModule -or $pesterModule.Version -lt [version]'5.0.0') {
+              Install-Module Pester -Scope CurrentUser -Force -SkipPublisherCheck -MinimumVersion 5.0.0
               $pesterModule = Get-Module Pester -ListAvailable | Sort-Object Version -Descending | Select-Object -First 1
           }
 
@@ -27,4 +27,8 @@ jobs:
       - name: Run PowerShellCliTools tests
         shell: pwsh
         run: |
-          Invoke-Pester .\tests\PowerShellCliTools.Tests.ps1 -EnableExit
+          Import-Module Pester -MinimumVersion 5.0.0 -Force
+          $configuration = New-PesterConfiguration
+          $configuration.Run.Path = '.\tests\PowerShellCliTools.Tests.ps1'
+          $configuration.Run.Exit = $true
+          Invoke-Pester -Configuration $configuration
