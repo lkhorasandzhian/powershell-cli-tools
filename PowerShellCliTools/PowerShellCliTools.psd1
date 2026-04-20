@@ -1,6 +1,6 @@
 @{
     RootModule = 'PowerShellCliTools.psm1'
-    ModuleVersion = '1.0.0'
+    ModuleVersion = '1.1.0'
     GUID = '60f17574-7e74-4c6a-8135-0dc03c86c0c4'
     Author = 'Levon Khorasandzhian'
     CompanyName = 'Personal'
