@@ -10,6 +10,9 @@ function Get-LineCount {
     if ($Exts -contains '*') {
         $files |
             Group-Object Extension |
+            Where-Object {
+                -not (Test-BinaryExtension -Extension $_.Name)
+            } |
             ForEach-Object {
                 $extensionName = if ([string]::IsNullOrEmpty($_.Name)) { '[no ext]' } else { $_.Name }
 
@@ -27,6 +30,11 @@ function Get-LineCount {
 
     foreach ($ext in $Exts) {
         $normalizedExt = Normalize-Extension -Extension $ext
+
+        if (Test-BinaryExtension -Extension $normalizedExt) {
+            continue
+        }
+
         $matchedFiles = $files | Where-Object { $_.Extension -ieq $normalizedExt }
         $lineCount = Get-TotalLineCount -Files $matchedFiles
         '{0,-10} {1}' -f $normalizedExt, $lineCount
