@@ -4,8 +4,8 @@ function Get-ExtensionColor {
         [Parameter(Mandatory = $true)]
         [string]$Name,
 
-        [Parameter(Mandatory = $true)]
-        [string]$Extension
+        [AllowEmptyString()]
+        [string]$Extension = ''
     )
 
     $pink = $PSStyle.Foreground.FromRgb(255, 140, 180)
