@@ -83,6 +83,7 @@ function Get-TotalLineCount {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
         [System.IO.FileInfo[]]$Files
     )
 

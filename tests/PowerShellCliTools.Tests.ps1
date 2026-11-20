@@ -25,6 +25,27 @@ Describe 'PowerShellCliTools module' {
         }
     }
 
+    Context 'when there are no matching files' {
+        BeforeEach {
+            $sampleDir = Join-Path $TestDrive ([guid]::NewGuid().ToString('N'))
+            New-Item -ItemType Directory -Path $sampleDir | Out-Null
+            Push-Location -LiteralPath $sampleDir
+        }
+
+        AfterEach {
+            Pop-Location
+        }
+
+        It 'returns zero for an absent extension' {
+            'sample content' | Set-Content -LiteralPath './sample.ps1'
+            Get-LineCount -Exts xyz -ErrorAction Stop | Should -Match '^\.xyz\s+0$'
+        }
+
+        It 'returns zero in an empty directory' {
+            Get-LineCount -Exts ps1 -ErrorAction Stop | Should -Match '^\.ps1\s+0$'
+        }
+    }
+
     It 'exports the approved-verb commands' {
         Get-Command Get-FileCount -ErrorAction Stop | Should -Not -BeNullOrEmpty
         Get-Command Get-LineCount -ErrorAction Stop | Should -Not -BeNullOrEmpty
