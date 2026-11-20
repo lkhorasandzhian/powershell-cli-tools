@@ -1,3 +1,5 @@
+#Requires -Version 7.2
+
 $ErrorActionPreference = 'Stop'
 
 $moduleName = 'PowerShellCliTools'

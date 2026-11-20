@@ -26,6 +26,11 @@ PowerShellCliTools/
 
 Public commands live in `Public`, while shared helpers stay in `Private`. This keeps the module easier to extend without growing one large script file.
 
+## Requirements
+
+- Windows
+- PowerShell 7.2 or later (`pwsh`)
+
 ## Quick start
 
 ```powershell

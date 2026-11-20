@@ -6,7 +6,7 @@
     CompanyName = 'Personal'
     Copyright = '(c) Levon Khorasandzhian. All rights reserved.'
     Description = 'Useful PowerShell CLI tools, counters, shortcuts, and colorful tree output.'
-    PowerShellVersion = '7.0'
+    PowerShellVersion = '7.2'
     FunctionsToExport = @(
         'Get-FileCount',
         'Get-LineCount',
