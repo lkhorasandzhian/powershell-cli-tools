@@ -35,7 +35,7 @@ function Get-LineCount {
             continue
         }
 
-        $matchedFiles = $files | Where-Object { $_.Extension -ieq $normalizedExt }
+        $matchedFiles = @($files | Where-Object { $_.Extension -ieq $normalizedExt })
         $lineCount = Get-TotalLineCount -Files $matchedFiles
         '{0,-10} {1}' -f $normalizedExt, $lineCount
     }
