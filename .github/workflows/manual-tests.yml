@@ -29,6 +29,6 @@ jobs:
         run: |
           Import-Module Pester -MinimumVersion 5.0.0 -Force
           $configuration = New-PesterConfiguration
-          $configuration.Run.Path = '.\tests\PowerShellCliTools.Tests.ps1'
+          $configuration.Run.Path = '.\tests'
           $configuration.Run.Exit = $true
           Invoke-Pester -Configuration $configuration
